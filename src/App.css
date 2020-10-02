@@ -1,0 +1,25 @@
+html, body, #root {
+    height: 100%;
+}
+
+.App {
+    height: 100%;
+    display: block;
+}
+
+.new-modal-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.modal {
+    position: absolute;
+}
+
+.new-modal {
+   width: 150px;
+   height: 50px;
+   margin-bottom: 50px;
+}
