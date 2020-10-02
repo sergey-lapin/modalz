@@ -16,6 +16,11 @@ html, body, #root {
 
 .modal {
     position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 1px solid;
+    padding-top: 40px;
+    background-color: #fff;
 }
 
 .new-modal {

@@ -1,76 +1,47 @@
 import React from 'react';
 import './App.css';
+import { useModal } from './components/useModalHook'
 
-function removeItemOnce(arr: any, value: any) {
-  var index = arr.indexOf(value);
-  if (index > -1) {
-    arr.splice(index, 1);
-  }
-  return [...arr];
-}
-
-const NewModalButton = ({ onClick }: { onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void }) => {
-  return <button className="new-modal" onClick={onClick}>
-    New Modal
-  </button>
-}
-
-const Modal = ({ x, y, onClose }: { x: number, y: number, onClose: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void }) => {
-  let closeMeCallback = (event: KeyboardEvent) => {
-    if (event.keyCode == 27) {
-      onClose(event as any);
-    }
-  }
-
-  React.useEffect(() => {
-    document.addEventListener('keydown', closeMeCallback);
-  }, [])
-
+const Modal = ({ children, x, y, onClose }: { children: any, x: number, y: number, onClose: (event: React.MouseEvent<any, MouseEvent>) => void }) => {
   return <div className="modal"
     style={{
       left: x,
       top: y,
-      width: 200,
-      height: 200,
-      border: '1px solid',
-      backgroundColor: "#fff"
     }}
-    onClick={onClose}>
+
+  >
     <button
+      onClick={onClose}
       style={{
         position: 'absolute',
         top: 10,
         right: 10
       }}>
       Cross
-    </button>
+      </button>
+    {children}
   </div>
 }
 
-function App() {
-  let [arrayOfModals, setArrayOfModals] = React.useState<number[]>([])
+const App = () => {
+  const [count, setCount] = React.useState(0);
 
-  const addModal = () => {
-    setArrayOfModals([...arrayOfModals, arrayOfModals.length + 1]);
-  }
-
-  const closeModal = (id: number) => {
-    setArrayOfModals(removeItemOnce(arrayOfModals, id));
-  }
-
-  return (
-    <div className="App">
-      <div className="new-modal-wrapper">
-        {arrayOfModals.map((i) => {
-          return <Modal key={i} x={100 * i} y={100 * i} onClose={(event) => {
-            console.log(event);
-            closeModal(i)
-          }} />
-        })}
-        <NewModalButton onClick={addModal} />
-      </div>
-    </div>
+  const { showModal } = useModal(
+    ({ onClose }) => (
+      <Modal x={0} y={0} onClose={onClose}>
+        <span>The count is {count}</span>
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+      </Modal>
+    ),
+    [count]
   );
-}
+
+  return <div className="new-modal-wrapper">
+    <button className="new-modal" onClick={showModal}>
+      New Modal
+    </button>
+  </div>
+
+};
 
 export default App;

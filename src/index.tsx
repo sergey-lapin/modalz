@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { ModalProvider } from './components/ModalProvider'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ModalProvider>
+      <App />
+    </ModalProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

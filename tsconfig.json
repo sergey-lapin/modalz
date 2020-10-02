@@ -20,6 +20,6 @@
     "jsx": "react"
   },
   "include": [
-    "src"
+    "src", "save.ts/_useModalHook2.ts"
   ]
 }
