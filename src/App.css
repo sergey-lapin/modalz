@@ -26,5 +26,13 @@ html, body, #root {
 .new-modal {
    width: 150px;
    height: 50px;
-   margin-bottom: 50px;
+   margin-bottom: 20px;
+}
+
+.modal-close {
+    font-size: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }

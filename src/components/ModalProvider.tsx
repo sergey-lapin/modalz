@@ -35,13 +35,22 @@ export const ModalProvider = ({
             }),
         []
     );
-    const contextValue = React.useMemo(() => ({ showModal, hideModal }), [showModal, hideModal]);
+
+    const onClose = React.useCallback(
+        (key: string) => {
+            hideModal(key)
+        },
+        [hideModal]
+    );
+
+    const contextValue = React.useMemo(() => ({ showModal, hideModal }), []);
 
     return (
         <ModalContext.Provider value={contextValue} >
             <>
                 {children}
                 <ModalRoot
+                    onClose={onClose}
                     modals={modals}
                     component={rootComponent}
                     container={container}

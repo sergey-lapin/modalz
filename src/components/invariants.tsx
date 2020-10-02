@@ -15,7 +15,7 @@ export const assertFunctionalComponent = (component: React.FunctionComponent<any
     }
 };
 
-export const invariantViolationUseModalOutsideProvider = () => {
+export const invariantViolationUseModalOutsideProvider = (): any => {
     throw new Error(
         "useModal can not be used without ModalProvider"
     );

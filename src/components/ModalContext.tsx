@@ -8,5 +8,5 @@ export interface ModalContextT {
 
 export const ModalContext = React.createContext<ModalContextT>({
     showModal: invariantViolationUseModalOutsideProvider,
-    hideModal: invariantViolationUseModalOutsideProvider
+    hideModal: invariantViolationUseModalOutsideProvider,
 });
