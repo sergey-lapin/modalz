@@ -61,7 +61,7 @@ const App = () => {
       <Button onClick={closeLast}>
         Close Last
       </Button>
-      {detectMobile.isMobile() && (
+      {!detectMobile.isMobile() && (
         <div className="checkbox">
           <label>
             <input
