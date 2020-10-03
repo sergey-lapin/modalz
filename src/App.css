@@ -7,6 +7,10 @@ html, body, #root {
     display: block;
 }
 
+* {
+    touch-action: manipulation;
+}
+
 .new-modal-wrapper{
     display: flex;
     justify-content: center;
