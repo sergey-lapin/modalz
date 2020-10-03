@@ -47,9 +47,7 @@ export const ModalProvider = ({
     );
 
     const onClose = React.useCallback(
-        (key: string) => {
-            hideModal(key)
-        },
+        (key: string) => hideModal(key),
         [hideModal]
     );
 

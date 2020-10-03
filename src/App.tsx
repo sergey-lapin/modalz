@@ -20,7 +20,8 @@ const App = () => {
 
   const closeLast = React.useCallback(() => {
     setArrayOfModals((arrayOfModals) => arrayOfModals.slice(0, -1));
-  }, [])
+    // eslint-disable-next-line
+  }, [arrayOfModals])
 
   const closeAll = React.useCallback(() => {
     setArrayOfModals(() => []);
@@ -37,8 +38,8 @@ const App = () => {
         vOffset: 250 * 1.25,
       })
       return (<PositionedModal
-        key={i}
         {...position}
+        key={i}
         id={i}
         onRemove={closeModal}
       >

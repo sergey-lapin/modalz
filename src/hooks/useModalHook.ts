@@ -29,7 +29,7 @@ export const useModal = (
     const showModal = useCallback(() => context.showModal(key, modal), []);
     const hideModal = useCallback(() => {
         context.hideModal(key)
-        onClose();
+        onClose()
         // eslint-disable-next-line
     }, []);
 
