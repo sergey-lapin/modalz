@@ -12,6 +12,10 @@ html, body, #root {
     touch-action: manipulation;
 }
 
+*:focus {
+    outline: none;
+}
+
 .new-modal-wrapper{
     display: flex;
     justify-content: center;
@@ -40,6 +44,7 @@ html, body, #root {
    width: 100px;
    height: 50px;
    cursor: pointer;
+   color: black;
    background: rgba(255, 255, 255, 1);
    -webkit-touch-callout: none; /* iOS Safari */
    -webkit-user-select: none; /* Safari */
@@ -49,6 +54,7 @@ html, body, #root {
            user-select: none; /* Non-prefixed version, currently
                                  supported by Chrome, Edge, Opera and Firefox */
 }
+
 
 .modal-close {
     font-size: 30px;
