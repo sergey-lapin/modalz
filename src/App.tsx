@@ -35,6 +35,43 @@ const Modal = ({ children, x, y, onClose, onFocus }: {
   </div>
 }
 
+export const useLongPress = (callback = () => { }, ms = 300) => {
+  const [startLongPress, setStartLongPress] = React.useState(false);
+
+  React.useEffect(() => {
+    let timerId: any;
+    if (startLongPress) {
+      timerId = setTimeout(callback, ms);
+    } else {
+      clearTimeout(timerId);
+    }
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [callback, ms, startLongPress]);
+
+  return {
+    onMouseDown: () => setStartLongPress(true),
+    onMouseUp: () => {
+      setStartLongPress(false)
+      callback();
+    },
+    onMouseLeave: () => setStartLongPress(false),
+    onTouchStart: () => setStartLongPress(true),
+    onTouchEnd: () => setStartLongPress(false),
+  };
+}
+
+type RefType = ((instance: HTMLButtonElement | null) => void) | React.MutableRefObject<HTMLButtonElement | null> | null
+
+const Button = React.forwardRef(({ children, onClick }: { children: any, onClick: () => void }, ref: RefType) => {
+  const backspaceLongPress = useLongPress(onClick, 150);
+  return (<button className="button" {...backspaceLongPress} ref={ref}>
+    {children}
+  </button>)
+})
+
 const SingleModal = ({ id, x, y, onRemove }: { id: number, x: number, y: number, onRemove: Function }) => {
   const { showModal, hideModal } = useModal(
     ({ onClose }) => (
@@ -81,6 +118,10 @@ const App = () => {
     setArrayOfModals((arrayOfModals) => removeItemOnce(arrayOfModals, id));
   }, [arrayOfModals])
 
+  const closeLast = React.useCallback(() => {
+    setArrayOfModals((arrayOfModals) => arrayOfModals.slice(0, -1));
+  }, [arrayOfModals])
+
   const closeAll = React.useCallback(() => {
     setArrayOfModals(() => []);
   }, [arrayOfModals])
@@ -89,20 +130,21 @@ const App = () => {
     buttonRef.current?.focus()
   }, [])
 
-  console.log(arrayOfModals)
-
   return <div className="new-modal-wrapper">
     {arrayOfModals.map((i) => {
       const position = getRandomPosition()
       return (<SingleModal id={i} {...position} onRemove={closeModal} />)
     })}
     <div className="row">
-      <button className="button" onClick={addModal} ref={buttonRef}>
+      <Button onClick={addModal} ref={buttonRef}>
         New Modal
-    </button>
-      <button className="button" onClick={closeAll}>
+      </Button>
+      <Button onClick={closeAll}>
         Close all
-    </button>
+      </Button>
+      <Button onClick={closeLast}>
+        Close last
+      </Button>
     </div>
   </div>
 

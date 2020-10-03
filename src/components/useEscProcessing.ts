@@ -4,7 +4,7 @@ const listeners: ((e: KeyboardEvent) => void)[] = [];
 export const useEscProcessing = ({ onEsc }: { onEsc: Function }) => {
     React.useLayoutEffect(() => {
         let callback = (e: KeyboardEvent) => {
-            if (e.keyCode == 27) {
+            if (e.keyCode === 27) {
                 onEsc()
                 e.stopImmediatePropagation();
                 document.removeEventListener('keydown', callback)
