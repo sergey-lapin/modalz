@@ -8,6 +8,7 @@ html, body, #root {
 }
 
 * {
+    -webkit-appearance:none;
     touch-action: manipulation;
 }
 
