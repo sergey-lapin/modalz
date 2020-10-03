@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { useModal } from './components/useModalHook'
+import { useLongPress } from './components/useLongPress'
 
 function removeItemOnce(arr: any, value: any) {
   var index = arr.indexOf(value);
@@ -35,39 +36,11 @@ const Modal = ({ children, x, y, onClose, onFocus }: {
   </div>
 }
 
-export const useLongPress = (callback = () => { }, ms = 300) => {
-  const [startLongPress, setStartLongPress] = React.useState(false);
-
-  React.useEffect(() => {
-    let timerId: any;
-    if (startLongPress) {
-      timerId = setTimeout(callback, ms);
-    } else {
-      clearTimeout(timerId);
-    }
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [callback, ms, startLongPress]);
-
-  return {
-    onMouseDown: () => setStartLongPress(true),
-    onMouseUp: () => {
-      setStartLongPress(false)
-      callback();
-    },
-    onMouseLeave: () => setStartLongPress(false),
-    onTouchStart: () => setStartLongPress(true),
-    onTouchEnd: () => setStartLongPress(false),
-  };
-}
-
 type RefType = ((instance: HTMLButtonElement | null) => void) | React.MutableRefObject<HTMLButtonElement | null> | null
 
 const Button = React.forwardRef(({ children, onClick }: { children: any, onClick: () => void }, ref: RefType) => {
-  const backspaceLongPress = useLongPress(onClick, 150);
-  return (<button className="button" {...backspaceLongPress} ref={ref}>
+  const longPress = useLongPress(onClick, 150);
+  return (<button className="button" {...longPress} ref={ref}>
     {children}
   </button>)
 })

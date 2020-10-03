@@ -39,7 +39,7 @@ html, body, #root {
    width: 100px;
    height: 50px;
    cursor: pointer;
-   opacity: 1;
+   background: rgba(255, 255, 255, 1);
    -webkit-touch-callout: none; /* iOS Safari */
    -webkit-user-select: none; /* Safari */
     -khtml-user-select: none; /* Konqueror HTML */
