@@ -33,12 +33,13 @@ const App = () => {
     {arrayOfModals.map((i) => {
       return (<Modal id={i}
         {...getRandomPosition({
-          hOffset: 200,
-          vOffset: 350,
+          hOffset: 250,
+          vOffset: 250 * 1.25,
         })}
         onRemove={closeModal}
       />)
     })}
+
     <div className="row">
       <Button onClick={addModal} ref={buttonRef}>
         New Modal
