@@ -45,6 +45,7 @@ html, body, #root {
    height: 50px;
    cursor: pointer;
    color: black;
+   border: 1px black solid;
    background: rgba(255, 255, 255, 1);
    -webkit-touch-callout: none; /* iOS Safari */
    -webkit-user-select: none; /* Safari */
