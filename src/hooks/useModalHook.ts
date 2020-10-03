@@ -25,17 +25,15 @@ export const useModal = (
     const modal = useMemo(() => component, [...inputs, component]);
     const context = useContext(ModalContext);
 
-    useEscProcessing({
-        onEsc: () => {
-            onClose()
-            context.hideModal(key);
-        }
-    })
-
     // eslint-disable-next-line
     const showModal = useCallback(() => context.showModal(key, modal), []);
-    // eslint-disable-next-line
-    const hideModal = useCallback(() => context.hideModal(key), []);
+    const hideModal = useCallback(() => {
+        context.hideModal(key)
+        onClose();
+        // eslint-disable-next-line
+    }, []);
+
+    useEscProcessing({ onEsc: hideModal })
 
     return {
         showModal,

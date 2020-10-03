@@ -20,13 +20,11 @@ const App = () => {
 
   const closeLast = React.useCallback(() => {
     setArrayOfModals((arrayOfModals) => arrayOfModals.slice(0, -1));
-    // eslint-disable-next-line
-  }, [arrayOfModals])
+  }, [])
 
   const closeAll = React.useCallback(() => {
     setArrayOfModals(() => []);
-    // eslint-disable-next-line
-  }, [arrayOfModals])
+  }, [])
 
   React.useLayoutEffect(() => {
     buttonRef.current?.focus()
@@ -34,11 +32,14 @@ const App = () => {
 
   return <div className="new-modal-wrapper">
     {arrayOfModals.map((i) => {
-      return (<PositionedModal id={i}
-        {...getRandomPosition({
-          hOffset: 250,
-          vOffset: 250 * 1.25,
-        })}
+      let position = getRandomPosition({
+        hOffset: 250,
+        vOffset: 250 * 1.25,
+      })
+      return (<PositionedModal
+        key={i}
+        {...position}
+        id={i}
         onRemove={closeModal}
       >
         <ElementCard elementNumber={getElementNumber(i)} />
