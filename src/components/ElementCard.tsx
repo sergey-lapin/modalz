@@ -60,7 +60,7 @@ export const ElementCard = ({ elementNumber, children }: { elementNumber: number
                 borderRadius,
             }}>
             {children}
-            <div className="element-card-content">
+            <div>
                 <div className="atomicMass">
                     {atomicMass}
                 </div>

@@ -1,8 +1,6 @@
 .element-card {
     border: 1px black solid;
     background: white;
-    left: 50px;
-    top: 50px;
     box-sizing: border-box;
 }
 
@@ -13,10 +11,6 @@
     box-sizing: border-box;
     font-weight: bold;
     font-family: sans-serif;
-}
-
-.element-card .element-card-content {
-    padding: 10px;
 }
 
 .element-card .atomicMass {
