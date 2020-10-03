@@ -23,10 +23,18 @@ html, body, #root {
     background-color: #fff;
 }
 
-.new-modal {
+.row {
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    z-index: 1000;
+}
+
+.button {
    width: 150px;
    height: 50px;
-   margin-bottom: 20px;
+   
 }
 
 .modal-close {

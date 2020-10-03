@@ -36,7 +36,7 @@ const Modal = ({ children, x, y, onClose, onFocus }: {
 }
 
 const SingleModal = ({ id, x, y, onRemove }: { id: number, x: number, y: number, onRemove: Function }) => {
-  const { showModal } = useModal(
+  const { showModal, hideModal } = useModal(
     ({ onClose }) => (
       <Modal x={x} y={y} onClose={() => {
         onRemove(id);
@@ -53,6 +53,9 @@ const SingleModal = ({ id, x, y, onRemove }: { id: number, x: number, y: number,
 
   React.useEffect(() => {
     showModal();
+    return () => {
+      hideModal();
+    }
   }, [])
 
   return <></>
@@ -71,25 +74,36 @@ const App = () => {
 
   const addModal = React.useCallback(() => {
     let lastElement = arrayOfModals[arrayOfModals.length - 1] || 0
-    setArrayOfModals([...arrayOfModals, lastElement + 1]);
+    setArrayOfModals((arrayOfModals) => [...arrayOfModals, lastElement + 1]);
   }, [arrayOfModals])
 
   const closeModal = React.useCallback((id: number) => {
-    setArrayOfModals(removeItemOnce(arrayOfModals, id));
+    setArrayOfModals((arrayOfModals) => removeItemOnce(arrayOfModals, id));
+  }, [arrayOfModals])
+
+  const closeAll = React.useCallback(() => {
+    setArrayOfModals(() => []);
   }, [arrayOfModals])
 
   React.useLayoutEffect(() => {
     buttonRef.current?.focus()
   }, [])
 
+  console.log(arrayOfModals)
+
   return <div className="new-modal-wrapper">
     {arrayOfModals.map((i) => {
       const position = getRandomPosition()
       return (<SingleModal id={i} {...position} onRemove={closeModal} />)
     })}
-    <button className="new-modal" onClick={addModal} tabIndex={0} ref={buttonRef}>
-      New Modal
+    <div className="row">
+      <button className="button" onClick={addModal} ref={buttonRef}>
+        New Modal
     </button>
+      <button className="button" onClick={closeAll}>
+        Close all
+    </button>
+    </div>
   </div>
 
 };
