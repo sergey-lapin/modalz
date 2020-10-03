@@ -2,9 +2,16 @@ import React from 'react';
 import { useModal } from '../hooks/useModalHook'
 import { Cross } from './Cross'
 
-type ModalT = { id: number, x: number, y: number, onRemove: Function, children: any }
+type ModalT = {
+    id: number,
+    x: number,
+    y: number,
+    onRemove: Function,
+    children: any,
+    shouldCloseAllOnEsc: boolean
+}
 
-export const PositionedModal = ({ x, y, id, onRemove, children }: ModalT) => {
+export const PositionedModal = ({ x, y, id, onRemove, children, shouldCloseAllOnEsc }: ModalT) => {
     const { showModal, hideModal } = useModal(
         () => {
             return <div style={{
@@ -18,7 +25,7 @@ export const PositionedModal = ({ x, y, id, onRemove, children }: ModalT) => {
                 </Cross>
             </div >
         },
-        { onClose: () => onRemove(id) },
+        { onClose: () => onRemove(id), shouldCloseAllOnEsc },
         [x, y]
     );
 

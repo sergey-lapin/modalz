@@ -7,6 +7,7 @@ import { ElementCard, getElementNumber } from './components/ElementCard'
 
 const App = () => {
   let buttonRef = React.useRef<HTMLButtonElement>(null);
+  let [shouldCloseAllOnEsc, setShouldCloseAllOnEsc] = React.useState(false);
   let [arrayOfModals, setArrayOfModals] = React.useState<number[]>([])
 
   const addModal = React.useCallback(() => {
@@ -35,10 +36,11 @@ const App = () => {
     {arrayOfModals.map((i) => {
       let position = getRandomPosition({
         hOffset: 250,
-        vOffset: 250 * 1.25,
+        vOffset: 350,
       })
       return (<PositionedModal
         {...position}
+        shouldCloseAllOnEsc={shouldCloseAllOnEsc}
         key={i}
         id={i}
         onRemove={closeModal}
@@ -57,6 +59,16 @@ const App = () => {
       <Button onClick={closeLast}>
         Close Last
       </Button>
+      <div className="checkbox">
+        <label>
+          <input
+            type="checkbox"
+            value="shouldCloseAllOnEsc"
+            checked={shouldCloseAllOnEsc}
+            onChange={() => setShouldCloseAllOnEsc(!shouldCloseAllOnEsc)} />
+          Close all on Esc
+        </label>
+      </div>
     </div>
   </div>
 

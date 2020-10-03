@@ -1,12 +1,16 @@
 import * as React from "react";
 const listeners: ((e: KeyboardEvent) => void)[] = [];
 
-export const useEscProcessing = ({ onEsc }: { onEsc: Function }) => {
+export const useEscProcessing = ({ onEsc, shouldCloseAll }: { onEsc: Function, shouldCloseAll?: boolean }) => {
     React.useLayoutEffect(() => {
         let callback = (e: KeyboardEvent) => {
             if (e.keyCode === 27) {
                 onEsc()
-                e.stopImmediatePropagation();
+                if (shouldCloseAll) {
+                    e.stopPropagation();
+                } else {
+                    e.stopImmediatePropagation();
+                }
                 document.removeEventListener('keydown', callback)
             }
         }
@@ -25,5 +29,5 @@ export const useEscProcessing = ({ onEsc }: { onEsc: Function }) => {
         return () => {
             document.removeEventListener('keydown', callback)
         }
-    }, [onEsc])
+    }, [onEsc, shouldCloseAll])
 }

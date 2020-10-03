@@ -7,7 +7,7 @@ html, body, #root {
     display: block;
 }
 
-* {
+div {
     -webkit-appearance:none;
     touch-action: manipulation;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -19,7 +19,7 @@ html, body, #root {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-*:focus {
+* {
     outline: none;
 }
 
@@ -31,7 +31,7 @@ html, body, #root {
 }
 
 .row {
-    width: 400px;
+    width: 700px;
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
