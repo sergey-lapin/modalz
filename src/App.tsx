@@ -115,11 +115,11 @@ const App = () => {
       <Button onClick={addModal} ref={buttonRef}>
         New Modal
       </Button>
-      <Button onClick={closeAll}>
-        Close all
-      </Button>
+      {!!arrayOfModals.length && <Button onClick={closeAll}>
+        Close All
+      </Button>}
       <Button onClick={closeLast}>
-        Close last
+        Close Last
       </Button>
     </div>
   </div>
