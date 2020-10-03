@@ -4,8 +4,10 @@ import { Button } from './components/Button'
 import { PositionedModal } from './components/PositionedModal'
 import { getRandomPosition, removeItemOnce } from './utils'
 import { ElementCard, getElementNumber } from './components/ElementCard'
+const useMobileDetect = require('use-mobile-detect-hook')
 
 const App = () => {
+  let detectMobile = useMobileDetect();
   let buttonRef = React.useRef<HTMLButtonElement>(null);
   let [shouldCloseAllOnEsc, setShouldCloseAllOnEsc] = React.useState(false);
   let [arrayOfModals, setArrayOfModals] = React.useState<number[]>([])
@@ -59,16 +61,18 @@ const App = () => {
       <Button onClick={closeLast}>
         Close Last
       </Button>
-      <div className="checkbox">
-        <label>
-          <input
-            type="checkbox"
-            value="shouldCloseAllOnEsc"
-            checked={shouldCloseAllOnEsc}
-            onChange={() => setShouldCloseAllOnEsc(!shouldCloseAllOnEsc)} />
+      {detectMobile.isMobile() && (
+        <div className="checkbox">
+          <label>
+            <input
+              type="checkbox"
+              value="shouldCloseAllOnEsc"
+              checked={shouldCloseAllOnEsc}
+              onChange={() => setShouldCloseAllOnEsc(!shouldCloseAllOnEsc)} />
           Close all on Esc
         </label>
-      </div>
+        </div>
+      )}
     </div>
   </div>
 
