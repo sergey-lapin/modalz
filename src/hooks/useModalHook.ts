@@ -13,11 +13,11 @@ type Props = {
     hideModal: () => void
 }
 
-type OptionsT = { onClose: Function, shouldCloseAllOnEsc: boolean }
+type OptionsT = { onClose: Function, onEscCloseAll?: Function }
 
 export const useModal = (
     component: React.FunctionComponent<any>,
-    { onClose, shouldCloseAllOnEsc }: OptionsT,
+    { onClose, onEscCloseAll }: OptionsT,
     inputs: any[] = []
 ): Props => {
     assertFunctionalComponent(component);
@@ -35,7 +35,7 @@ export const useModal = (
         // eslint-disable-next-line
     }, []);
 
-    useEscProcessing({ onEsc: hideModal, shouldCloseAll: shouldCloseAllOnEsc })
+    useEscProcessing({ onEsc: hideModal, onEscCloseAll })
 
     return {
         showModal,

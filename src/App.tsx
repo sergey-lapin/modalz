@@ -42,7 +42,7 @@ const App = () => {
       })
       return (<PositionedModal
         {...position}
-        shouldCloseAllOnEsc={shouldCloseAllOnEsc}
+        onEscCloseAll={shouldCloseAllOnEsc ? closeAll : undefined}
         key={i}
         id={i}
         onRemove={closeModal}

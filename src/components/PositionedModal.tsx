@@ -8,10 +8,10 @@ type ModalT = {
     y: number,
     onRemove: Function,
     children: any,
-    shouldCloseAllOnEsc: boolean
+    onEscCloseAll?: Function
 }
 
-export const PositionedModal = ({ x, y, id, onRemove, children, shouldCloseAllOnEsc }: ModalT) => {
+export const PositionedModal = ({ x, y, id, onRemove, children, onEscCloseAll }: ModalT) => {
     const { showModal, hideModal } = useModal(
         () => {
             return <div style={{
@@ -25,7 +25,7 @@ export const PositionedModal = ({ x, y, id, onRemove, children, shouldCloseAllOn
                 </Cross>
             </div >
         },
-        { onClose: () => onRemove(id), shouldCloseAllOnEsc },
+        { onClose: () => onRemove(id), onEscCloseAll },
         [x, y]
     );
 
