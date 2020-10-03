@@ -16,13 +16,17 @@ export const ModalProvider = ({
     const [modals, setModals] = React.useState<Record<string, React.FunctionComponent<any>>>({});
 
     const showModal = React.useCallback(
-        (key: string, modal: React.FunctionComponent<any>) =>
-            setModals(modals => ({
-                ...modals,
-                [key]: modal
-            })),
-        []
+        (key: string, modal: React.FunctionComponent<any>) => {
+            return setModals(modals => {
+                return {
+                    ...modals,
+                    [key]: modal
+                }
+            })
+        },
+        [modals]
     );
+
     const hideModal = React.useCallback(
         (key: string) =>
             setModals(modals => {
@@ -33,7 +37,13 @@ export const ModalProvider = ({
                 delete newModals[key];
                 return newModals;
             }),
-        []
+        [modals]
+    );
+
+    const isShown = React.useCallback(
+        (key: string) =>
+            !!Object.keys(modals).find((item) => item === key),
+        [modals]
     );
 
     const onClose = React.useCallback(
@@ -43,7 +53,7 @@ export const ModalProvider = ({
         [hideModal]
     );
 
-    const contextValue = React.useMemo(() => ({ showModal, hideModal }), []);
+    const contextValue = React.useMemo(() => ({ showModal, hideModal, isShown }), []);
 
     return (
         <ModalContext.Provider value={contextValue} >

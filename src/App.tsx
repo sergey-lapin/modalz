@@ -58,7 +58,15 @@ const SingleModal = ({ id, x, y, onRemove }: { id: number, x: number, y: number,
   return <></>
 }
 
+const getRandomPosition = () => {
+  return {
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+  }
+}
+
 const App = () => {
+  let buttonRef = React.useRef<HTMLButtonElement>(null);
   let [arrayOfModals, setArrayOfModals] = React.useState<number[]>([])
 
   const addModal = React.useCallback(() => {
@@ -70,13 +78,16 @@ const App = () => {
     setArrayOfModals(removeItemOnce(arrayOfModals, id));
   }, [arrayOfModals])
 
-  console.log(arrayOfModals)
+  React.useLayoutEffect(() => {
+    buttonRef.current?.focus()
+  }, [])
 
   return <div className="new-modal-wrapper">
     {arrayOfModals.map((i) => {
-      return (<SingleModal id={i} x={100 * i} y={100 * i} onRemove={closeModal} />)
+      const position = getRandomPosition()
+      return (<SingleModal id={i} {...position} onRemove={closeModal} />)
     })}
-    <button className="new-modal" onClick={addModal}>
+    <button className="new-modal" onClick={addModal} tabIndex={0} ref={buttonRef}>
       New Modal
     </button>
   </div>
