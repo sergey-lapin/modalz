@@ -1,4 +1,5 @@
 import React from 'react';
+import './ElementCard.css'
 
 type ElementT = {
     atomicMass: string,
@@ -32,11 +33,6 @@ export const ElementCard = ({ border, element, children }: { border: string, ele
 
     return <div
         style={{
-            border: '1px black solid',
-            background: 'white',
-            left: 50,
-            top: 50,
-            boxSizing: 'border-box',
             padding: `${borderWidth}px`,
             width,
             height: aspectRatio * width,
@@ -44,48 +40,27 @@ export const ElementCard = ({ border, element, children }: { border: string, ele
         }}
     >
         <div
+            className="element-card-border"
             style={{
                 border: border,
                 borderWidth,
-                borderStyle: 'solid',
-                height: '100%',
-                boxSizing: 'border-box',
-                fontWeight: 'bold',
-                fontFamily: 'sans-serif',
                 borderRadius,
             }}>
             {children}
-            <div style={{
-                padding: '15px',
-            }}>
-                <div
-                    style={{
-                        textAlign: 'right',
-                    }}>
+            <div className="element-card-content">
+                <div className="atomicMass">
                     {atomicMass}
                 </div>
-                <div style={{
-                    textAlign: 'center',
-                    fontSize: 80
-                }}>
+                <div className="symbol">
                     {element.symbol}
                 </div>
-                <div style={{
-                    textAlign: 'right',
-                    fontSize: 20
-                }}>
+                <div className="atomic-number">
                     {element.atomicNumber}
                 </div>
-                <div style={{
-                    textAlign: 'center',
-                    fontSize: 20
-                }}>
+                <div className="name">
                     {element.name}
                 </div>
-                <div style={{
-                    textAlign: 'center',
-                    marginTop: 20
-                }}>
+                <div className="electronic-configuration">
                     {element.electronicConfiguration}
                 </div>
             </div>

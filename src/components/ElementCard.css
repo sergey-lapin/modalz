@@ -1,0 +1,44 @@
+.element-card {
+    border: 1px black solid;
+    background: white;
+    left: 50px;
+    top: 50px;
+    box-sizing: border-box;
+}
+
+.element-card .element-card-border {
+    padding: 15px;
+    border-style: solid;
+    height: 100%;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.element-card .element-card-content {
+    padding: 15px;
+}
+
+.element-card .atomicMass {
+    text-align: right;
+}
+
+.element-card .symbol {
+    text-align: center;
+    font-size: 80px;
+}
+
+.element-card .atomic-number {
+    text-align: right;
+    font-size: 20px;
+}
+
+.element-card .name {
+    text-align: center;
+    font-size: 20px;
+}
+
+.element-card .electronic-configuration {
+    text-align: center;
+    margin-top: 20px; 
+}
