@@ -24,7 +24,7 @@ export const ModalProvider = ({
                 }
             })
         },
-        [modals]
+        []
     );
 
     const hideModal = React.useCallback(
@@ -37,7 +37,7 @@ export const ModalProvider = ({
                 delete newModals[key];
                 return newModals;
             }),
-        [modals]
+        []
     );
 
     const isShown = React.useCallback(
@@ -53,7 +53,7 @@ export const ModalProvider = ({
         [hideModal]
     );
 
-    const contextValue = React.useMemo(() => ({ showModal, hideModal, isShown }), []);
+    const contextValue = React.useMemo(() => ({ showModal, hideModal, isShown }), [showModal, hideModal, isShown]);
 
     return (
         <ModalContext.Provider value={contextValue} >

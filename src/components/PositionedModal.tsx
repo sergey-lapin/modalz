@@ -28,7 +28,7 @@ export const PositionedModal = ({ id, x, y, onRemove, children }: ModalT) => {
         return () => {
             hideModal();
         }
-    }, [])
+    }, [showModal, hideModal])
 
     return <></>
 }

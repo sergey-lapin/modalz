@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useCallback, useMemo } from "react";
+import { useContext, useCallback, useMemo } from "react";
 import { ModalContext } from "../components/ModalContext";
 import { assertFunctionalComponent } from '../components/invariants'
 import { useEscProcessing } from './useEscProcessing'
@@ -21,18 +21,19 @@ export const useModal = (
     assertFunctionalComponent(component);
 
     const key = useMemo(generateKey, []);
+    // eslint-disable-next-line
     const modal = useMemo(() => component, [...inputs, component]);
     const context = useContext(ModalContext);
 
-    useEscProcessing({
-        onEsc: () => {
-            onClose()
-            context.hideModal(key);
-        }
-    })
-
+    // eslint-disable-next-line
     const showModal = useCallback(() => context.showModal(key, modal), []);
-    const hideModal = useCallback(() => context.hideModal(key), []);
+    const hideModal = useCallback(() => {
+        context.hideModal(key)
+        onClose();
+        // eslint-disable-next-line
+    }, []);
+
+    useEscProcessing({ onEsc: hideModal })
 
     return {
         showModal,

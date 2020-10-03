@@ -40,6 +40,7 @@ export const ElementCard = ({ elementNumber, children }: { elementNumber: number
     let borderRadius = 10;
 
     let element: ElementT = pt.numbers[getElementNumber(elementNumber)]
+
     let atomicMass = element.atomicMass.indexOf('.') ? element.atomicMass.slice(0, element.atomicMass.indexOf('.') + 2) : element.atomicMass
 
     return <div
