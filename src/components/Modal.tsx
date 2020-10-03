@@ -1,12 +1,9 @@
 import React from 'react';
 import { useModal } from './useModalHook'
-import { ElementCard } from './ElementCard'
+import { ElementCard, getElementNumber } from './ElementCard'
 
-let pt = require('periodic-table');
 
-const getElementNumber = (id: number) => {
-    return Math.max(id % (Object.keys(pt.elements).length), 1)
-}
+
 
 type ModalT = { id: number, x: number, y: number, onRemove: Function }
 
@@ -31,7 +28,7 @@ const ModalWrapper = ({ id, x, y, onClose, children }: { id: any, x: any, y: any
             top: y,
         }}
     >
-        <ElementCard border={getElementColor(id)} element={pt.numbers[getElementNumber(id)]}>
+        <ElementCard elementNumber={getElementNumber(id)}>
             {(isHovered || isCrossHovered) &&
                 (
                     <div
@@ -52,9 +49,6 @@ const ModalWrapper = ({ id, x, y, onClose, children }: { id: any, x: any, y: any
     </div>
 }
 
-let getElementColor = (id: number) => {
-    return pt.numbers[getElementNumber(id)].cpkHexColor !== 'FFFFFF' ? `#${pt.numbers[getElementNumber(id)].cpkHexColor}` : '#000'
-}
 
 export const Modal = ({ id, x, y, onRemove }: ModalT) => {
     const { showModal, hideModal } = useModal(

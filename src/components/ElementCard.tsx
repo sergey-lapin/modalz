@@ -1,5 +1,6 @@
 import React from 'react';
 import './ElementCard.css'
+let pt = require('periodic-table');
 
 type ElementT = {
     atomicMass: string,
@@ -24,14 +25,25 @@ type ElementT = {
     yearDiscovered: number
 }
 
-export const ElementCard = ({ border, element, children }: { border: string, element: ElementT, children?: any }) => {
+export const getElementNumber = (id: number) => {
+    return Math.max(id % (Object.keys(pt.elements).length), 1)
+}
+
+export let getElementColor = (id: number) => {
+    return pt.numbers[getElementNumber(id)].cpkHexColor !== 'FFFFFF' ? `#${pt.numbers[getElementNumber(id)].cpkHexColor}` : '#000'
+}
+
+export const ElementCard = ({ elementNumber, children }: { elementNumber: number, children?: any }) => {
     let aspectRatio = 1.25;
     const width = 250;
     let borderWidth = 15;
     let borderRadius = 10;
+
+    let element: ElementT = pt.numbers[getElementNumber(elementNumber)]
     let atomicMass = element.atomicMass.indexOf('.') ? element.atomicMass.slice(0, element.atomicMass.indexOf('.') + 2) : element.atomicMass
 
     return <div
+        className="element-card"
         style={{
             padding: `${borderWidth}px`,
             width,
@@ -42,7 +54,7 @@ export const ElementCard = ({ border, element, children }: { border: string, ele
         <div
             className="element-card-border"
             style={{
-                border: border,
+                borderColor: getElementColor(element.atomicNumber),
                 borderWidth,
                 borderRadius,
             }}>
