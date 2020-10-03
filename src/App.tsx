@@ -52,15 +52,20 @@ const App = () => {
     })}
 
     <div className="row">
+      {!!arrayOfModals.length && <>
+        <Button onClick={closeAll}>
+          Close All
+        </Button>
+        <Button onClick={closeLast}>
+          Close Last
+        </Button>
+      </>}
+    </div>
+    <div className="row">
       <Button onClick={addModal} ref={buttonRef}>
         New Modal
       </Button>
-      {!!arrayOfModals.length && <Button onClick={closeAll}>
-        Close All
-      </Button>}
-      <Button onClick={closeLast}>
-        Close Last
-      </Button>
+
       {!detectMobile.isMobile() && (
         <div className="checkbox">
           <label>
