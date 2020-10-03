@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { useModal } from './components/useModalHook'
-import { useLongPress } from './components/useLongPress'
+import { Button } from './components/Button'
 
 function removeItemOnce(arr: any, value: any) {
   var index = arr.indexOf(value);
@@ -11,50 +11,26 @@ function removeItemOnce(arr: any, value: any) {
   return [...arr];
 }
 
-const Modal = ({ children, x, y, onClose, onFocus }: {
-  children: any,
-  x: number,
-  y: number,
-  onClose: (event: React.MouseEvent<any, MouseEvent>) => void,
-  onFocus?: (event: React.MouseEvent) => void
-}) => {
-  return <div className="modal"
-    onClick={onFocus}
-    style={{
-      left: x,
-      top: y,
-    }}
+type ModalT = { id: number, x: number, y: number, onRemove: Function }
 
-  >
-    <div
-      className="modal-close"
-      onClick={onClose}
-    >
-      ✕
-      </div>
-    {children}
-  </div>
-}
-
-type RefType = ((instance: HTMLButtonElement | null) => void) | React.MutableRefObject<HTMLButtonElement | null> | null
-
-const Button = React.forwardRef(({ children, onClick }: { children: any, onClick: () => void }, ref: RefType) => {
-  const longPress = useLongPress(onClick, 150);
-  return (<button className="button" {...longPress} ref={ref}>
-    {children}
-  </button>)
-})
-
-const SingleModal = ({ id, x, y, onRemove }: { id: number, x: number, y: number, onRemove: Function }) => {
+const Modal = ({ id, x, y, onRemove }: ModalT) => {
   const { showModal, hideModal } = useModal(
     ({ onClose }) => (
-      <Modal x={x} y={y} onClose={() => {
-        onRemove(id);
-        onClose();
-      }}
+      <div className="modal"
+        style={{
+          left: x,
+          top: y,
+        }}
+
       >
-        hello {id}
-      </Modal>
+        <div
+          className="modal-close"
+          onClick={onClose}
+        >
+          ✕
+      </div>
+      hello {id}
+      </div>
     ), {
     onClose: () => onRemove(id)
   },
@@ -109,7 +85,7 @@ const App = () => {
         width: 200,
         height: 350,
       })
-      return (<SingleModal id={i} {...position} onRemove={closeModal} />)
+      return (<Modal id={i} {...position} onRemove={closeModal} />)
     })}
     <div className="row">
       <Button onClick={addModal} ref={buttonRef}>
