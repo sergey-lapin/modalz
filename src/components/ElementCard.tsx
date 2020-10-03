@@ -1,5 +1,6 @@
 import React from 'react';
 import './ElementCard.css'
+import { cardWidth, cardHeight } from '../consts'
 let pt = require('periodic-table');
 
 type ElementT = {
@@ -34,8 +35,7 @@ export let getElementColor = (id: number) => {
 }
 
 export const ElementCard = ({ elementNumber, children }: { elementNumber: number, children?: any }) => {
-    let aspectRatio = 1.25;
-    const width = 250;
+    let width = cardWidth;
     let borderWidth = 15;
     let borderRadius = 10;
 
@@ -47,7 +47,7 @@ export const ElementCard = ({ elementNumber, children }: { elementNumber: number
         style={{
             padding: `${borderWidth}px`,
             width,
-            height: aspectRatio * width,
+            height: cardHeight,
             borderRadius
         }}
     >

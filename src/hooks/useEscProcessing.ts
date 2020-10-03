@@ -25,5 +25,5 @@ export const useEscProcessing = ({ onEsc }: { onEsc: Function }) => {
         return () => {
             document.removeEventListener('keydown', callback)
         }
-    }, [])
+    }, [onEsc])
 }
