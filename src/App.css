@@ -56,6 +56,10 @@ html, body, #root {
    background: rgba(255, 255, 255, 1);
 }
 
+.button:active { 
+    transform: scale(0.98); 
+} 
+
 .modal-close {
     font-size: 30px;
     position: absolute;
