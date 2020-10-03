@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useCallback, useMemo } from "react";
-import { ModalContext } from "./ModalContext";
-import { assertFunctionalComponent } from './invariants'
+import { ModalContext } from "../components/ModalContext";
+import { assertFunctionalComponent } from '../components/invariants'
 import { useEscProcessing } from './useEscProcessing'
 
 const generateKey = (() => {

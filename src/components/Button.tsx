@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 
-import { useLongPress } from './useLongPress'
+import { useLongPress } from '../hooks/useLongPress'
 type RefType = ((instance: HTMLButtonElement | null) => void) | React.MutableRefObject<HTMLButtonElement | null> | null
 
 export const Button = React.forwardRef(({ children, onClick }: { children: any, onClick: () => void }, ref: RefType) => {

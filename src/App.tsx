@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
 import { Button } from './components/Button'
-import { Modal } from './components/Modal'
+import { PositionedModal } from './components/PositionedModal'
 import { getRandomPosition, removeItemOnce } from './utils'
+import { ElementCard, getElementNumber } from './components/ElementCard'
 
 const App = () => {
   let buttonRef = React.useRef<HTMLButtonElement>(null);
@@ -31,13 +32,15 @@ const App = () => {
 
   return <div className="new-modal-wrapper">
     {arrayOfModals.map((i) => {
-      return (<Modal id={i}
+      return (<PositionedModal id={i}
         {...getRandomPosition({
           hOffset: 250,
           vOffset: 250 * 1.25,
         })}
         onRemove={closeModal}
-      />)
+      >
+        <ElementCard elementNumber={getElementNumber(i)} />
+      </PositionedModal>)
     })}
 
     <div className="row">
