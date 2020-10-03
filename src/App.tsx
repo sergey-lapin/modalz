@@ -39,7 +39,7 @@ const Modal = ({ children, x, y, onClose, onFocus }: {
 type RefType = ((instance: HTMLButtonElement | null) => void) | React.MutableRefObject<HTMLButtonElement | null> | null
 
 const Button = React.forwardRef(({ children, onClick }: { children: any, onClick: () => void }, ref: RefType) => {
-  const longPress = useLongPress(onClick, 150);
+  const longPress = useLongPress(onClick, 100);
   return (<button className="button" {...longPress} ref={ref}>
     {children}
   </button>)
@@ -71,10 +71,10 @@ const SingleModal = ({ id, x, y, onRemove }: { id: number, x: number, y: number,
   return <></>
 }
 
-const getRandomPosition = () => {
+const getRandomPosition = ({ width, height }: { width: number, height: number }) => {
   return {
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
+    x: Math.random() * Math.max(0, (window.innerWidth - width)),
+    y: Math.random() * Math.max(0, (window.innerHeight - height)),
   }
 }
 
@@ -105,7 +105,10 @@ const App = () => {
 
   return <div className="new-modal-wrapper">
     {arrayOfModals.map((i) => {
-      const position = getRandomPosition()
+      const position = getRandomPosition({
+        width: 200,
+        height: 350,
+      })
       return (<SingleModal id={i} {...position} onRemove={closeModal} />)
     })}
     <div className="row">
