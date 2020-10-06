@@ -8,7 +8,6 @@ const useMobileDetect = require('use-mobile-detect-hook')
 
 const App = () => {
   let detectMobile = useMobileDetect();
-  let buttonRef = React.useRef<HTMLButtonElement>(null);
   let [shouldCloseAllOnEsc, setShouldCloseAllOnEsc] = React.useState(false);
   let [arrayOfModals, setArrayOfModals] = React.useState<number[]>([])
 
@@ -31,19 +30,20 @@ const App = () => {
     setArrayOfModals(() => []);
   }, [])
 
-  const onProcessEnter = React.useCallback((event: React.KeyboardEvent<HTMLButtonElement>): void => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      event.stopPropagation();
-      addModal();
+  React.useEffect(() => {
+    const callback = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        addModal();
+      }
+    }
+    document.addEventListener('keydown', callback)
+
+    return () => {
+      document.removeEventListener('keydown', callback)
     }
   }, [])
 
-  React.useEffect(() => {
-    buttonRef.current?.focus()
-  }, [])
-
-  return <div className="new-modal-wrapper" >
+  return <div className="new-modal-wrapper">
     {arrayOfModals.map((i) => {
       let position = getRandomPosition({
         hOffset: 250,
@@ -70,8 +70,8 @@ const App = () => {
         </Button>
       </>}
     </div>
-    <div className="row" tabIndex={0}>
-      <Button onClick={addModal} ref={buttonRef} onKeyDown={onProcessEnter}>
+    <div className="row" >
+      <Button onClick={addModal} >
         New Modal
       </Button>
 
