@@ -23,16 +23,13 @@ export const useModal = (
     assertFunctionalComponent(component);
 
     const key = useMemo(generateKey, []);
-    // eslint-disable-next-line
-    const modal = useMemo(() => component, [...inputs, component]);
+    const modal = useMemo(() => component, inputs);
     const context = useContext(ModalContext);
 
-    // eslint-disable-next-line
     const showModal = useCallback(() => context.showModal(key, modal), []);
     const hideModal = useCallback(() => {
         context.hideModal(key)
         onClose()
-        // eslint-disable-next-line
     }, []);
 
     useEscProcessing({ onEsc: hideModal, onEscCloseAll })

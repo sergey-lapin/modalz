@@ -7,17 +7,19 @@ const addCallback = (callback: (e: KeyboardEvent) => void) => {
     }
 
     document.addEventListener('keydown', callback);
-    listeners.push(callback);
-    
-    for (let i = listeners.length - 1; i >= 0; i--) {
-        document.addEventListener('keydown', listeners[i]);
+    listeners.unshift(callback);
+
+    for (let listener of listeners) {
+        document.addEventListener('keydown', listener)
     }
 }
 
 const removeCallback = (callback: (e: KeyboardEvent) => void) => {
     let foundIndex = listeners.findIndex((item) => item === callback)
-    listeners.splice(foundIndex, 1);
-    document.removeEventListener('keydown', callback);
+    if (foundIndex !== -1) {
+        listeners.splice(foundIndex, 1);
+        document.removeEventListener('keydown', callback);
+    }
 }
 
 const removeAllCallbacks = () => {
