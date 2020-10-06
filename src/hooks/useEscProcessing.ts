@@ -7,11 +7,24 @@ const addCallback = (callback: (e: KeyboardEvent) => void) => {
     }
 
     document.addEventListener('keydown', callback);
-
+    listeners.push(callback);
+    
     for (let i = listeners.length - 1; i >= 0; i--) {
         document.addEventListener('keydown', listeners[i]);
     }
-    listeners.push(callback);
+}
+
+const removeCallback = (callback: (e: KeyboardEvent) => void) => {
+    let foundIndex = listeners.findIndex((item) => item === callback)
+    listeners.splice(foundIndex, 1);
+    document.removeEventListener('keydown', callback);
+}
+
+const removeAllCallbacks = () => {
+    listeners.forEach(callback => {
+        document.removeEventListener('keydown', callback);
+    });
+    listeners = [];
 }
 
 export const useEscProcessing = ({ onEsc, onEscCloseAll }: { onEsc: Function, onEscCloseAll?: Function }) => {
@@ -21,12 +34,11 @@ export const useEscProcessing = ({ onEsc, onEscCloseAll }: { onEsc: Function, on
                 if (onEscCloseAll) {
                     e.stopPropagation();
                     onEscCloseAll();
-                    listeners = []
+                    removeAllCallbacks();
                 } else {
-                    let foundIndex = listeners.findIndex((item) => item === callback)
-                    listeners.splice(foundIndex, 1);
-                    onEsc()
                     e.stopImmediatePropagation();
+                    onEsc()
+                    removeCallback(callback);
                 }
 
                 document.removeEventListener('keydown', callback)
@@ -36,8 +48,7 @@ export const useEscProcessing = ({ onEsc, onEscCloseAll }: { onEsc: Function, on
         addCallback(callback)
 
         return () => {
-            listeners = []
-            document.removeEventListener('keydown', callback)
+            removeCallback(callback);
         }
     }, [onEsc, onEscCloseAll])
 }
