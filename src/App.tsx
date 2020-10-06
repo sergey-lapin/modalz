@@ -13,9 +13,11 @@ const App = () => {
   let [arrayOfModals, setArrayOfModals] = React.useState<number[]>([])
 
   const addModal = React.useCallback(() => {
-    let lastElement = arrayOfModals[arrayOfModals.length - 1] || 0
-    setArrayOfModals((arrayOfModals) => [...arrayOfModals, lastElement + 1]);
-  }, [arrayOfModals])
+    setArrayOfModals((arrayOfModals) => {
+      let lastElement = arrayOfModals[arrayOfModals.length - 1] || 0
+      return [...arrayOfModals, lastElement + 1];
+    });
+  }, [])
 
   const closeModal = React.useCallback((id: number) => {
     setArrayOfModals((arrayOfModals) => removeItemOnce(arrayOfModals, id));
@@ -23,8 +25,7 @@ const App = () => {
 
   const closeLast = React.useCallback(() => {
     setArrayOfModals((arrayOfModals) => arrayOfModals.slice(0, -1));
-    // eslint-disable-next-line
-  }, [arrayOfModals])
+  }, [])
 
   const closeAll = React.useCallback(() => {
     setArrayOfModals(() => []);
