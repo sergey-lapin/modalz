@@ -2,24 +2,44 @@ import React from 'react';
 import './App.css';
 import { Button } from './components/Button'
 import { PositionedModal } from './components/PositionedModal'
-import { getRandomPosition, removeItemOnce } from './utils'
+import { getRandomPosition } from './utils'
 import { ElementCard, getElementNumber } from './components/ElementCard'
 const useMobileDetect = require('use-mobile-detect-hook')
 
+type ModalT = {
+  index: number;
+  x: number;
+  y: number;
+}
 const App = () => {
   let detectMobile = useMobileDetect();
   let [shouldCloseAllOnEsc, setShouldCloseAllOnEsc] = React.useState(false);
-  let [arrayOfModals, setArrayOfModals] = React.useState<number[]>([])
+  let [arrayOfModals, setArrayOfModals] = React.useState<ModalT[]>([])
 
   const addModal = React.useCallback(() => {
     setArrayOfModals((arrayOfModals) => {
-      let lastElement = arrayOfModals[arrayOfModals.length - 1] || 0
-      return [...arrayOfModals, lastElement + 1];
+      let position = getRandomPosition({
+        hOffset: 250,
+        vOffset: 350,
+      })
+      let lastElement = arrayOfModals[arrayOfModals.length - 1]
+      let lastElementIndex = lastElement ? lastElement.index : 0
+
+      return [...arrayOfModals, {
+        index: lastElementIndex + 1,
+        ...position
+      }];
     });
   }, [])
 
-  const closeModal = React.useCallback((id: number) => {
-    setArrayOfModals((arrayOfModals) => removeItemOnce(arrayOfModals, id));
+  const closeModal = React.useCallback((index: number) => {
+    setArrayOfModals((arrayOfModals) => {
+      let foundIndex = arrayOfModals.findIndex((item) => item.index === index);
+      if (foundIndex > -1) {
+        arrayOfModals.splice(foundIndex, 1);
+      }
+      return [...arrayOfModals];
+    });
   }, [])
 
   const closeLast = React.useCallback(() => {
@@ -41,22 +61,19 @@ const App = () => {
     return () => {
       document.removeEventListener('keydown', callback)
     }
-  }, [])
+  }, [addModal])
 
   return <div className="new-modal-wrapper">
-    {arrayOfModals.map((i) => {
-      let position = getRandomPosition({
-        hOffset: 250,
-        vOffset: 350,
-      })
+    {arrayOfModals.map((item) => {
       return (<PositionedModal
-        {...position}
+        x={item.x}
+        y={item.y}
         onEscCloseAll={shouldCloseAllOnEsc ? closeAll : undefined}
-        key={i}
-        id={i}
+        key={item.index}
+        id={item.index}
         onRemove={closeModal}
       >
-        <ElementCard elementNumber={getElementNumber(i)} />
+        <ElementCard elementNumber={getElementNumber(item.index)} />
       </PositionedModal>)
     })}
 

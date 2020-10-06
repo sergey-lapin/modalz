@@ -8,9 +8,9 @@ type ButtonT = {
     onClick: () => void,
 }
 
-export const Button = React.forwardRef(({ children, onClick }: ButtonT) => {
+export const Button = ({ children, onClick }: ButtonT) => {
     const longPress = useLongPress(onClick, 150);
     return (<button className="button" {...longPress}>
         {children}
     </button>)
-})
+}

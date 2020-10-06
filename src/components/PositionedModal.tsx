@@ -12,11 +12,23 @@ type ModalT = {
 }
 
 export const PositionedModal = ({ x, y, id, onRemove, children, onEscCloseAll }: ModalT) => {
+    const onClose = React.useCallback(() => {
+        onRemove(id)
+    }, [id, onRemove]);
+
+    let [xx, setXX] = React.useState(100);
+
+    React.useEffect(() => {
+        setInterval(() => {
+            setXX((xxx) => xxx + 1)
+        }, 100)
+    }, []);
+
     const { showModal, hideModal } = useModal(
         () => {
             return <div style={{
                 position: 'absolute',
-                left: x,
+                left: xx,
                 top: y,
             }}
             >
@@ -25,8 +37,8 @@ export const PositionedModal = ({ x, y, id, onRemove, children, onEscCloseAll }:
                 </Cross>
             </div >
         },
-        { onClose: () => onRemove(id), onEscCloseAll },
-        [x, y]
+        { onClose, onEscCloseAll },
+        [xx, y]
     );
 
     React.useEffect(() => {

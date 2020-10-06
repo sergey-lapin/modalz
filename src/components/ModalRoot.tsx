@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-const ModalRenderer = React.memo(({ component, onClose, ...rest }: {
+const ModalRenderer = React.memo(({ component, ...rest }: {
     component: React.FunctionComponent<any>;
     onClose: Function
 }) =>
-    component({ onClose, ...rest })
+    component({ ...rest })
 );
 
 type Props = {
