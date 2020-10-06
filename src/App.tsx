@@ -31,11 +31,19 @@ const App = () => {
     setArrayOfModals(() => []);
   }, [])
 
-  React.useLayoutEffect(() => {
+  const onProcessEnter = React.useCallback((event: React.KeyboardEvent<HTMLButtonElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      addModal();
+    }
+  }, [])
+
+  React.useEffect(() => {
     buttonRef.current?.focus()
   }, [])
 
-  return <div className="new-modal-wrapper">
+  return <div className="new-modal-wrapper" >
     {arrayOfModals.map((i) => {
       let position = getRandomPosition({
         hOffset: 250,
@@ -62,8 +70,8 @@ const App = () => {
         </Button>
       </>}
     </div>
-    <div className="row">
-      <Button onClick={addModal} ref={buttonRef}>
+    <div className="row" tabIndex={0}>
+      <Button onClick={addModal} ref={buttonRef} onKeyDown={onProcessEnter}>
         New Modal
       </Button>
 
