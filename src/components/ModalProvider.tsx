@@ -46,10 +46,6 @@ export const ModalProvider = ({
         [modals]
     );
 
-    const onClose = React.useCallback(
-        (key: string) => hideModal(key),
-        [hideModal]
-    );
 
     const contextValue = React.useMemo(() => ({ showModal, hideModal, isShown }), [showModal, hideModal, isShown]);
 
@@ -58,7 +54,6 @@ export const ModalProvider = ({
             <>
                 {children}
                 <ModalRoot
-                    onClose={onClose}
                     modals={modals}
                     component={rootComponent}
                     container={container}

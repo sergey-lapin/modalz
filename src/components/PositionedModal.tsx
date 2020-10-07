@@ -7,15 +7,14 @@ type ModalT = {
     x: number,
     y: number,
     onRemove: Function,
+    onEscCloseAll?: Function,
     children: any,
-    onEscCloseAll?: Function
 }
 
-export const PositionedModal = ({ x, y, id, onRemove, children, onEscCloseAll }: ModalT) => {
+export const PositionedModal = ({ x, y, id, onRemove, onEscCloseAll, children }: ModalT) => {
     const onClose = React.useCallback(() => {
         onRemove(id)
     }, [id, onRemove]);
-
 
     const { showModal, hideModal } = useModal(
         () => {
