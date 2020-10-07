@@ -6,13 +6,13 @@ export const useLongPress = (callback = () => { }, ms = 300) => {
     React.useEffect(() => {
         let timerId: any;
         if (startLongPress) {
-            timerId = setTimeout(callback, ms);
+            timerId = setInterval(callback, ms);
         } else {
-            clearTimeout(timerId);
+            clearInterval(timerId);
         }
 
         return () => {
-            clearTimeout(timerId);
+            clearInterval(timerId);
         };
     }, [callback, ms, startLongPress]);
 

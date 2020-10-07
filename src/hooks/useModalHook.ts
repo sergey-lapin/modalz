@@ -1,4 +1,4 @@
-import { useContext, useCallback, useMemo } from "react";
+import { useContext, useCallback, useMemo, useRef, useState, useEffect, DependencyList } from "react";
 import { ModalContext } from "../components/ModalContext";
 import { assertFunctionalComponent } from '../components/invariants'
 import { useEscProcessing } from './useEscProcessing'
@@ -18,22 +18,37 @@ type OptionsT = { onClose: Function, onEscCloseAll?: Function }
 export const useModal = (
     component: React.FunctionComponent<any>,
     { onClose, onEscCloseAll }: OptionsT,
-    inputs: any[] = []
+    inputs: DependencyList = []
 ): Props => {
     assertFunctionalComponent(component);
-
+    const contextRef = useRef(useContext(ModalContext));
     const key = useMemo(generateKey, []);
-    // eslint-disable-next-line
-    const modal = useMemo(() => component, [...inputs, component]);
-    const context = useContext(ModalContext);
+    const modal = useCallback(component, inputs);
+    const modalRef = useRef(modal);
 
-    // eslint-disable-next-line
-    const showModal = useCallback(() => context.showModal(key, modal), []);
+    const [isShown, setShown] = useState<boolean>(false);
+
+    const showModal = useCallback(() => {
+        contextRef.current.showModal(key, modalRef.current);
+        setShown(true);
+    }, [key]);
+
     const hideModal = useCallback(() => {
-        context.hideModal(key)
-        onClose()
-        // eslint-disable-next-line
-    }, []);
+        contextRef.current.hideModal(key)
+        setShown(false);
+        onClose();
+    }, [key, onClose]);
+
+    useEffect(() => {
+        const context = contextRef.current;
+        if (isShown) {
+            context.showModal(key, modal);
+        } else {
+            context.hideModal(key);
+        }
+
+        return () => context.hideModal(key);
+    }, [key, modal, isShown, onClose]);
 
     useEscProcessing({ onEsc: hideModal, onEscCloseAll })
 
