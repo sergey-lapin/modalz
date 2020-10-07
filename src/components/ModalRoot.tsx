@@ -1,12 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-const ModalRenderer = React.memo(({ component, ...rest }: {
-    component: React.FunctionComponent<any>;
-}) => {
-    return component({ ...rest })
-});
-
 type Props = {
     modals: Record<string, React.FunctionComponent<any>>;
     component?: React.ComponentType<any>;
@@ -27,12 +21,10 @@ export const ModalRoot = React.memo(
         return mountNode
             ? ReactDOM.createPortal(
                 <RootComponent>
-                    {Object.keys(modals).map(key => (
-                        <ModalRenderer
-                            key={key}
-                            component={modals[key]}
-                        />
-                    ))}
+                    {Object.keys(modals).map(key => {
+                        let ModalComponent = modals[key];
+                        return <ModalComponent key={key} />
+                    })}
                 </RootComponent>,
                 mountNode
             )
