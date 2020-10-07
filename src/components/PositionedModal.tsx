@@ -25,7 +25,7 @@ export const PositionedModal = ({ x, y, id, onRemove, children, onEscCloseAll }:
                 top: y,
             }}
             >
-                <Cross onClose={() => hideModal()}>
+                <Cross onClose={hideModal}>
                     {children}
                 </Cross>
             </div >
